@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Tiến độ review công khai của AG-MCP.">
+  <meta name="color-scheme" content="light">
+  <title>AG-MCP · Tiến độ review</title>
+  <style>
+    :root { font-family: system-ui, sans-serif; color: #172527; background: #eef4f2; line-height: 1.55; }
+    * { box-sizing: border-box; }
+    body { margin: 0; }
+    main { width: min(100% - 2rem, 65rem); margin: 3rem auto; }
+    header { background: #173738; color: #f6fdfa; border-radius: 1.4rem; padding: clamp(1.6rem, 5vw, 3.5rem); }
+    h1 { font-size: clamp(2rem, 7vw, 4.2rem); line-height: 1.05; margin: .45rem 0 .9rem; letter-spacing: -.05em; }
+    h2 { font-size: 1.4rem; margin: 0 0 .8rem; }
+    p { margin: .3rem 0; }
+    .label { font-size: .76rem; font-weight: 750; letter-spacing: .13em; text-transform: uppercase; }
+    header .label, header .stamp { color: #bce5d6; }
+    header .stamp { display: inline-block; margin-top: 1.15rem; font-size: .88rem; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(14rem, 100%), 1fr)); gap: .8rem; margin: .8rem 0; }
+    article, section { border: 1px solid #d4e1dd; background: #fff; padding: 1.3rem; border-radius: 1rem; }
+    article strong { display: block; margin: .3rem 0; font-size: 1.65rem; line-height: 1.2; }
+    article p, .note, footer { color: #455b55; }
+    section { margin: .8rem 0; }
+    dl { margin: 0; }
+    dl > div { display: grid; grid-template-columns: minmax(7rem, .7fr) 2fr; gap: .6rem; border-top: 1px solid #e1ebe7; padding: .8rem 0; }
+    dt { font-weight: 700; }
+    dd { margin: 0; }
+    .waiting { color: #86510e; font-weight: 700; }
+    footer { padding: .7rem .2rem; font-size: .88rem; }
+    @media (max-width: 36rem) { main { margin: 1rem auto; } dl > div { grid-template-columns: 1fr; gap: .1rem; } }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <span class="label">AG-MCP / Bản review công khai</span>
+      <h1>Tiến độ review</h1>
+      <p>Bản vá đã được chuẩn bị. Xác nhận độc lập và triển khai vẫn đang chờ.</p>
+      <time class="stamp" datetime="2026-11-10T11:24:45Z">Đối chiếu lúc 18:24 ICT ngày 10/11/2026</time>
+    </header>
+
+    <div class="grid" aria-label="Tổng quan tiến độ">
+      <article><span class="label">Hạng mục P0</span><strong>2 có bản vá</strong><p>Commit trên nhánh sửa cục bộ. Bản chính vẫn chờ tích hợp.</p></article>
+      <article><span class="label">Hồi quy tập trung</span><strong>3/3 đạt</strong><p>Cả ba ca dành riêng cho bản vá đều đạt.</p></article>
+      <article><span class="label">Bộ hồi quy async DAG</span><strong>71 đạt · 3 lỗi</strong><p>Hai lỗi cũng xuất hiện trên bản gốc. Ca còn lại đang chờ đối chiếu.</p></article>
+    </div>
+
+    <section aria-labelledby="checks">
+      <h2 id="checks">Các mốc xác minh</h2>
+      <dl>
+        <div><dt>Bản vá</dt><dd>Hai hạng mục P0 đã có thay đổi và kiểm tra tập trung trên nhánh sửa.</dd></div>
+        <div><dt>MCP contract</dt><dd>L1–L3 đạt. <span class="waiting">L4 chưa xác minh.</span></dd></div>
+        <div><dt>Review độc lập</dt><dd><span class="waiting">Chờ xác nhận cho bản vá.</span></dd></div>
+        <div><dt>Triển khai</dt><dd><span class="waiting">Đang chờ.</span></dd></div>
+      </dl>
+    </section>
+
+    <footer>Trang chỉ đọc. Nội dung phản ánh lần đối chiếu ghi ở đầu trang và được cập nhật bằng bản xuất mới.</footer>
+  </main>
+</body>
+</html>
