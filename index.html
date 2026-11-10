@@ -1,63 +1,1143 @@
 <!doctype html>
-<html lang="vi">
+<html lang="vi" data-theme="auto">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Tiến độ review công khai của AG-MCP.">
-  <meta name="color-scheme" content="light">
-  <title>AG-MCP · Tiến độ review</title>
+  <meta name="description" content="Bảng theo dõi tiến độ review và kiểm định kỹ thuật công khai của AG-MCP.">
+  <meta name="color-scheme" content="light dark">
+  <title>AG-MCP · Bảng tiến độ review công khai</title>
   <style>
-    :root { font-family: system-ui, sans-serif; color: #172527; background: #eef4f2; line-height: 1.55; }
-    * { box-sizing: border-box; }
-    body { margin: 0; }
-    main { width: min(100% - 2rem, 65rem); margin: 3rem auto; }
-    header { background: #173738; color: #f6fdfa; border-radius: 1.4rem; padding: clamp(1.6rem, 5vw, 3.5rem); }
-    h1 { font-size: clamp(2rem, 7vw, 4.2rem); line-height: 1.05; margin: .45rem 0 .9rem; letter-spacing: -.05em; }
-    h2 { font-size: 1.4rem; margin: 0 0 .8rem; }
-    p { margin: .3rem 0; }
-    .label { font-size: .76rem; font-weight: 750; letter-spacing: .13em; text-transform: uppercase; }
-    header .label, header .stamp { color: #bce5d6; }
-    header .stamp { display: inline-block; margin-top: 1.15rem; font-size: .88rem; }
-    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(14rem, 100%), 1fr)); gap: .8rem; margin: .8rem 0; }
-    article, section { border: 1px solid #d4e1dd; background: #fff; padding: 1.3rem; border-radius: 1rem; }
-    article strong { display: block; margin: .3rem 0; font-size: 1.65rem; line-height: 1.2; }
-    article p, .note, footer { color: #455b55; }
-    section { margin: .8rem 0; }
-    dl { margin: 0; }
-    dl > div { display: grid; grid-template-columns: minmax(7rem, .7fr) 2fr; gap: .6rem; border-top: 1px solid #e1ebe7; padding: .8rem 0; }
-    dt { font-weight: 700; }
-    dd { margin: 0; }
-    .waiting { color: #86510e; font-weight: 700; }
-    footer { padding: .7rem .2rem; font-size: .88rem; }
-    @media (max-width: 36rem) { main { margin: 1rem auto; } dl > div { grid-template-columns: 1fr; gap: .1rem; } }
+    :root {
+      --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      
+      /* Color Palette: Light Mode */
+      --bg-page: #f6f8f7;
+      --bg-surface: #ffffff;
+      --bg-surface-elevated: #ffffff;
+      --bg-subtle: #edf3f1;
+      --border-subtle: #d7e2de;
+      --border-focus: #10b981;
+      
+      --text-main: #0c201e;
+      --text-muted: #3d544f;
+      --text-subtle: #6b827d;
+      
+      --brand-dark: #0f2b2c;
+      --brand-mint: #10b981;
+      --brand-mint-subtle: #ecfdf5;
+      
+      --status-ok-bg: #ecfdf5;
+      --status-ok-border: #a7f3d0;
+      --status-ok-text: #065f46;
+      --status-ok-accent: #059669;
+
+      --status-wait-bg: #fffbeb;
+      --status-wait-border: #fde68a;
+      --status-wait-text: #92400e;
+      --status-wait-accent: #d97706;
+
+      --status-warn-bg: #fef2f2;
+      --status-warn-border: #fecaca;
+      --status-warn-text: #991b1b;
+      --status-warn-accent: #dc2626;
+
+      --status-info-bg: #eff6ff;
+      --status-info-border: #bfdbfe;
+      --status-info-text: #1e40af;
+      --status-info-accent: #2563eb;
+
+      --hero-bg: linear-gradient(135deg, #0e282a 0%, #153c3e 100%);
+      --hero-text: #f0fdf9;
+      --hero-sub: #b7ded4;
+      --hero-tag-bg: rgba(255, 255, 255, 0.12);
+      --hero-tag-border: rgba(255, 255, 255, 0.22);
+
+      --card-shadow: 0 3px 10px -2px rgba(12, 32, 30, 0.05), 0 1px 4px -1px rgba(12, 32, 30, 0.03);
+      --card-hover-shadow: 0 10px 22px -4px rgba(12, 32, 30, 0.08), 0 4px 8px -2px rgba(12, 32, 30, 0.04);
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 20px;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --bg-page: #0a0f12;
+        --bg-surface: #111a1d;
+        --bg-surface-elevated: #162226;
+        --bg-subtle: #172428;
+        --border-subtle: #22343a;
+        --border-focus: #34d399;
+        
+        --text-main: #f1f7f5;
+        --text-muted: #9eb2ac;
+        --text-subtle: #6d847e;
+        
+        --brand-dark: #071315;
+        --brand-mint: #34d399;
+        --brand-mint-subtle: rgba(52, 211, 153, 0.12);
+        
+        --status-ok-bg: rgba(16, 185, 129, 0.12);
+        --status-ok-border: rgba(52, 211, 153, 0.3);
+        --status-ok-text: #6ee7b7;
+        --status-ok-accent: #34d399;
+
+        --status-wait-bg: rgba(245, 158, 11, 0.12);
+        --status-wait-border: rgba(251, 191, 36, 0.3);
+        --status-wait-text: #fde68a;
+        --status-wait-accent: #fbbf24;
+
+        --status-warn-bg: rgba(239, 68, 68, 0.12);
+        --status-warn-border: rgba(248, 113, 113, 0.3);
+        --status-warn-text: #fca5a5;
+        --status-warn-accent: #f87171;
+
+        --status-info-bg: rgba(59, 130, 246, 0.12);
+        --status-info-border: rgba(96, 165, 250, 0.3);
+        --status-info-text: #93c5fd;
+        --status-info-accent: #60a5fa;
+
+        --hero-bg: linear-gradient(135deg, #0e2225 0%, #16363a 100%);
+        --hero-text: #f0fdf9;
+        --hero-sub: #a1cec2;
+        --hero-tag-bg: rgba(255, 255, 255, 0.08);
+        --hero-tag-border: rgba(255, 255, 255, 0.16);
+
+        --card-shadow: 0 4px 14px -2px rgba(0, 0, 0, 0.45);
+        --card-hover-shadow: 0 10px 24px -3px rgba(0, 0, 0, 0.65);
+      }
+    }
+
+    /* Explicit Dark Theme */
+    [data-theme="dark"] {
+      --bg-page: #0a0f12;
+      --bg-surface: #111a1d;
+      --bg-surface-elevated: #162226;
+      --bg-subtle: #172428;
+      --border-subtle: #22343a;
+      --border-focus: #34d399;
+      
+      --text-main: #f1f7f5;
+      --text-muted: #9eb2ac;
+      --text-subtle: #6d847e;
+      
+      --brand-dark: #071315;
+      --brand-mint: #34d399;
+      --brand-mint-subtle: rgba(52, 211, 153, 0.12);
+      
+      --status-ok-bg: rgba(16, 185, 129, 0.12);
+      --status-ok-border: rgba(52, 211, 153, 0.3);
+      --status-ok-text: #6ee7b7;
+      --status-ok-accent: #34d399;
+
+      --status-wait-bg: rgba(245, 158, 11, 0.12);
+      --status-wait-border: rgba(251, 191, 36, 0.3);
+      --status-wait-text: #fde68a;
+      --status-wait-accent: #fbbf24;
+
+      --status-warn-bg: rgba(239, 68, 68, 0.12);
+      --status-warn-border: rgba(248, 113, 113, 0.3);
+      --status-warn-text: #fca5a5;
+      --status-warn-accent: #f87171;
+
+      --status-info-bg: rgba(59, 130, 246, 0.12);
+      --status-info-border: rgba(96, 165, 250, 0.3);
+      --status-info-text: #93c5fd;
+      --status-info-accent: #60a5fa;
+
+      --hero-bg: linear-gradient(135deg, #0e2225 0%, #16363a 100%);
+      --hero-text: #f0fdf9;
+      --hero-sub: #a1cec2;
+      --hero-tag-bg: rgba(255, 255, 255, 0.08);
+      --hero-tag-border: rgba(255, 255, 255, 0.16);
+
+      --card-shadow: 0 4px 14px -2px rgba(0, 0, 0, 0.45);
+      --card-hover-shadow: 0 10px 24px -3px rgba(0, 0, 0, 0.65);
+    }
+
+    /* Explicit Light Theme */
+    [data-theme="light"] {
+      --bg-page: #f6f8f7;
+      --bg-surface: #ffffff;
+      --bg-surface-elevated: #ffffff;
+      --bg-subtle: #edf3f1;
+      --border-subtle: #d7e2de;
+      --border-focus: #10b981;
+      
+      --text-main: #0c201e;
+      --text-muted: #3d544f;
+      --text-subtle: #6b827d;
+      
+      --brand-dark: #0f2b2c;
+      --brand-mint: #10b981;
+      --brand-mint-subtle: #ecfdf5;
+      
+      --status-ok-bg: #ecfdf5;
+      --status-ok-border: #a7f3d0;
+      --status-ok-text: #065f46;
+      --status-ok-accent: #059669;
+
+      --status-wait-bg: #fffbeb;
+      --status-wait-border: #fde68a;
+      --status-wait-text: #92400e;
+      --status-wait-accent: #d97706;
+
+      --status-warn-bg: #fef2f2;
+      --status-warn-border: #fecaca;
+      --status-warn-text: #991b1b;
+      --status-warn-accent: #dc2626;
+
+      --status-info-bg: #eff6ff;
+      --status-info-border: #bfdbfe;
+      --status-info-text: #1e40af;
+      --status-info-accent: #2563eb;
+
+      --hero-bg: linear-gradient(135deg, #0e282a 0%, #153c3e 100%);
+      --hero-text: #f0fdf9;
+      --hero-sub: #b7ded4;
+      --hero-tag-bg: rgba(255, 255, 255, 0.12);
+      --hero-tag-border: rgba(255, 255, 255, 0.22);
+
+      --card-shadow: 0 3px 10px -2px rgba(12, 32, 30, 0.05), 0 1px 4px -1px rgba(12, 32, 30, 0.03);
+      --card-hover-shadow: 0 10px 22px -4px rgba(12, 32, 30, 0.08), 0 4px 8px -2px rgba(12, 32, 30, 0.04);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    
+    body {
+      font-family: var(--font-sans);
+      color: var(--text-main);
+      background-color: var(--bg-page);
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+      transition: background-color 0.2s ease, color 0.2s ease;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Container */
+    .container {
+      width: min(100% - 2.5rem, 68rem);
+      margin: 2.2rem auto;
+      flex: 1;
+    }
+
+    /* Top Utility Bar */
+    .top-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      margin-bottom: 1.25rem;
+      padding: 0 0.25rem;
+    }
+
+    .brand-group {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.65rem;
+      font-size: 0.88rem;
+      font-weight: 650;
+      letter-spacing: -0.01em;
+      color: var(--text-muted);
+      flex-wrap: wrap;
+    }
+
+    .brand-icon {
+      width: 26px;
+      height: 26px;
+      border-radius: var(--radius-sm);
+      background: var(--brand-dark);
+      color: var(--brand-mint);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+      flex-shrink: 0;
+    }
+
+    .brand-name {
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .public-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.22rem 0.55rem;
+      border-radius: 9999px;
+      background: var(--bg-subtle);
+      border: 1px solid var(--border-subtle);
+      font-size: 0.74rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      white-space: nowrap;
+    }
+
+    .theme-toggle {
+      border: 1px solid var(--border-subtle);
+      background: var(--bg-surface);
+      color: var(--text-muted);
+      padding: 0.4rem 0.75rem;
+      border-radius: 9999px;
+      font-size: 0.8rem;
+      font-weight: 550;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      box-shadow: var(--card-shadow);
+      transition: all 0.15s ease;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .theme-toggle:hover {
+      background: var(--bg-subtle);
+      color: var(--text-main);
+      border-color: var(--text-subtle);
+    }
+
+    /* Hero Banner: Prominent Verdict & Freshness */
+    .hero-card {
+      background: var(--hero-bg);
+      color: var(--hero-text);
+      border-radius: var(--radius-lg);
+      padding: clamp(1.6rem, 4.5vw, 2.75rem);
+      box-shadow: 0 12px 30px -4px rgba(14, 41, 42, 0.25);
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .hero-card::after {
+      content: "";
+      position: absolute;
+      top: -30%;
+      right: -10%;
+      width: 320px;
+      height: 320px;
+      background: radial-gradient(circle, rgba(52, 211, 153, 0.18) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-badge-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.6rem;
+      margin-bottom: 1.1rem;
+    }
+
+    .hero-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.35rem 0.75rem;
+      border-radius: 9999px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      background: var(--hero-tag-bg);
+      border: 1px solid var(--hero-tag-border);
+      color: #d1fae5;
+    }
+
+    .pill-pulse {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #fbbf24;
+      box-shadow: 0 0 0 0 rgba(251, 191, 36, 0.7);
+      animation: pulse 2s infinite cubic-bezier(0.4, 0, 0.6, 1);
+      flex-shrink: 0;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.3); opacity: 0.6; }
+    }
+
+    .hero-title {
+      font-size: clamp(1.85rem, 5.2vw, 3rem);
+      font-weight: 800;
+      line-height: 1.12;
+      letter-spacing: -0.035em;
+      margin-bottom: 0.85rem;
+      max-width: 44rem;
+    }
+
+    .hero-verdict {
+      font-size: clamp(1.02rem, 2.2vw, 1.25rem);
+      color: var(--hero-sub);
+      line-height: 1.5;
+      max-width: 46rem;
+      margin-bottom: 1.4rem;
+    }
+
+    .hero-meta-bar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 1.2rem;
+      padding-top: 1.1rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.12);
+      font-size: 0.86rem;
+      color: var(--hero-sub);
+    }
+
+    .hero-meta-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+    }
+
+    .hero-meta-item strong {
+      color: #ffffff;
+      font-weight: 600;
+    }
+
+    /* KPI Grid Cards */
+    .kpi-section {
+      margin-top: 1.75rem;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 0.5rem;
+      margin-bottom: 0.85rem;
+      padding: 0 0.2rem;
+    }
+
+    .section-title {
+      font-size: 1.05rem;
+      font-weight: 750;
+      letter-spacing: -0.01em;
+      color: var(--text-main);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .section-subtitle {
+      font-size: 0.8rem;
+      color: var(--text-subtle);
+    }
+
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+    }
+
+    .kpi-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 1.35rem 1.25rem;
+      box-shadow: var(--card-shadow);
+      transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    .kpi-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--card-hover-shadow);
+      border-color: var(--border-focus);
+    }
+
+    .kpi-card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .kpi-label {
+      font-size: 0.78rem;
+      font-weight: 750;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .kpi-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      font-size: 0.74rem;
+      font-weight: 700;
+      padding: 0.2rem 0.55rem;
+      border-radius: 9999px;
+      line-height: 1.3;
+      white-space: nowrap;
+    }
+
+    .badge-ok {
+      background: var(--status-ok-bg);
+      border: 1px solid var(--status-ok-border);
+      color: var(--status-ok-text);
+    }
+
+    .badge-wait {
+      background: var(--status-wait-bg);
+      border: 1px solid var(--status-wait-border);
+      color: var(--status-wait-text);
+    }
+
+    .badge-info {
+      background: var(--status-info-bg);
+      border: 1px solid var(--status-info-border);
+      color: var(--status-info-text);
+    }
+
+    .kpi-value-row {
+      display: flex;
+      align-items: baseline;
+      gap: 0.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .kpi-metric {
+      font-size: clamp(1.85rem, 3.2vw, 2.3rem);
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      line-height: 1.1;
+      color: var(--text-main);
+      font-feature-settings: "tnum" 1;
+    }
+
+    .kpi-subtext {
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+
+    .kpi-desc {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      line-height: 1.48;
+      margin-top: auto;
+      padding-top: 0.65rem;
+      border-top: 1px dashed var(--border-subtle);
+    }
+
+    .progress-bar-wrap {
+      width: 100%;
+      height: 6px;
+      background: var(--bg-subtle);
+      border-radius: 9999px;
+      overflow: hidden;
+      margin: 0.6rem 0 0.8rem;
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      border-radius: 9999px;
+      transition: width 0.4s ease;
+    }
+
+    .fill-green { background: var(--status-ok-accent); }
+    .fill-amber { background: var(--status-wait-accent); }
+    .fill-blue { background: var(--status-info-accent); }
+
+    /* Timeline / Verification Milestones */
+    .timeline-section {
+      margin-top: 1.85rem;
+    }
+
+    .timeline-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 1.6rem 1.5rem;
+      box-shadow: var(--card-shadow);
+    }
+
+    .milestone-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+      position: relative;
+    }
+
+    .milestone-list::before {
+      content: "";
+      position: absolute;
+      top: 1rem;
+      bottom: 1rem;
+      left: 1.35rem;
+      width: 2px;
+      background: var(--border-subtle);
+      z-index: 0;
+    }
+
+    .milestone-item {
+      display: grid;
+      grid-template-columns: 2.7rem 1fr;
+      gap: 1.1rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .milestone-node {
+      width: 2.7rem;
+      height: 2.7rem;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 750;
+      font-size: 0.95rem;
+      background: var(--bg-surface);
+      box-shadow: 0 0 0 4px var(--bg-surface);
+      transition: all 0.2s ease;
+      flex-shrink: 0;
+    }
+
+    .node-done {
+      background: var(--status-ok-bg);
+      border: 2px solid var(--status-ok-accent);
+      color: var(--status-ok-accent);
+    }
+
+    .node-active {
+      background: var(--status-wait-bg);
+      border: 2px solid var(--status-wait-accent);
+      color: var(--status-wait-accent);
+    }
+
+    .node-waiting {
+      background: var(--bg-subtle);
+      border: 2px dashed var(--border-subtle);
+      color: var(--text-subtle);
+    }
+
+    .milestone-content {
+      background: var(--bg-subtle);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      padding: 1rem 1.15rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .milestone-header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+    }
+
+    .milestone-title-group {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .milestone-title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .milestone-status-badge {
+      font-size: 0.72rem;
+      font-weight: 750;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 0.18rem 0.5rem;
+      border-radius: 4px;
+      white-space: nowrap;
+    }
+
+    .milestone-desc {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    .milestone-desc .waiting {
+      color: var(--status-wait-accent);
+      font-weight: 700;
+    }
+
+    .milestone-desc .ok {
+      color: var(--status-ok-accent);
+      font-weight: 700;
+    }
+
+    /* Assurance & Integrity Note */
+    .assurance-box {
+      margin-top: 1.85rem;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-left: 4px solid var(--brand-mint);
+      border-radius: var(--radius-sm);
+      padding: 1.1rem 1.25rem;
+      box-shadow: var(--card-shadow);
+      display: flex;
+      gap: 0.85rem;
+      align-items: flex-start;
+    }
+
+    .assurance-icon {
+      color: var(--brand-mint);
+      flex-shrink: 0;
+      margin-top: 0.1rem;
+    }
+
+    .assurance-text {
+      font-size: 0.86rem;
+      color: var(--text-muted);
+      line-height: 1.52;
+    }
+
+    .assurance-text strong {
+      color: var(--text-main);
+      font-weight: 650;
+    }
+
+    /* Footer */
+    footer {
+      margin-top: 3rem;
+      padding: 1.8rem 0 2.5rem;
+      border-top: 1px solid var(--border-subtle);
+      text-align: center;
+      font-size: 0.84rem;
+      color: var(--text-subtle);
+      line-height: 1.6;
+    }
+
+    footer a {
+      color: var(--text-muted);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    footer a:hover {
+      color: var(--brand-mint);
+    }
+
+    /* Mobile Responsive Optimizations */
+    @media (max-width: 48rem) {
+      .container {
+        width: min(100% - 1.5rem, 100%);
+        margin: 1.1rem auto;
+      }
+
+      .top-bar {
+        margin-bottom: 0.85rem;
+        gap: 0.5rem;
+      }
+
+      .brand-group {
+        gap: 0.5rem;
+        font-size: 0.84rem;
+      }
+
+      .section-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.2rem;
+        margin-bottom: 0.75rem;
+      }
+
+      .hero-card {
+        border-radius: var(--radius-md);
+        padding: 1.35rem 1.15rem;
+      }
+
+      .hero-title {
+        font-size: 1.7rem;
+        margin-bottom: 0.65rem;
+      }
+
+      .hero-verdict {
+        font-size: 0.96rem;
+        margin-bottom: 1rem;
+      }
+
+      .hero-meta-bar {
+        gap: 0.75rem;
+        font-size: 0.8rem;
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .kpi-grid {
+        grid-template-columns: 1fr;
+        gap: 0.85rem;
+      }
+
+      .timeline-card {
+        padding: 1.25rem 1rem;
+      }
+
+      .milestone-list::before {
+        left: 1.1rem;
+      }
+
+      .milestone-item {
+        grid-template-columns: 2.2rem 1fr;
+        gap: 0.75rem;
+      }
+
+      .milestone-node {
+        width: 2.2rem;
+        height: 2.2rem;
+        font-size: 0.82rem;
+      }
+
+      .milestone-content {
+        padding: 0.85rem 0.95rem;
+      }
+
+      .milestone-title {
+        font-size: 0.94rem;
+      }
+
+      .milestone-desc {
+        font-size: 0.85rem;
+      }
+    }
+
+    @media (min-width: 48.01rem) and (max-width: 64rem) {
+      .kpi-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .kpi-grid .kpi-card:last-child {
+        grid-column: span 2;
+      }
+    }
   </style>
 </head>
 <body>
-  <main>
-    <header>
-      <span class="label">AG-MCP / Bản review công khai</span>
-      <h1>Tiến độ review</h1>
-      <p>Bản vá đã được chuẩn bị. Xác nhận độc lập và triển khai vẫn đang chờ.</p>
-      <time class="stamp" datetime="2026-11-10T11:24:45Z">Đối chiếu lúc 18:24 ICT ngày 10/11/2026</time>
+  <div class="container">
+    <!-- Top Utility Bar -->
+    <header class="top-bar">
+      <div class="brand-group">
+        <span class="brand-icon" aria-hidden="true">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          </svg>
+        </span>
+        <span class="brand-name">AG-MCP</span>
+        <span class="public-badge">Chỉ đọc · Công khai</span>
+      </div>
+
+      <button id="themeToggleBtn" class="theme-toggle" type="button" aria-label="Chuyển chế độ sáng tối">
+        <svg id="themeIconSun" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;">
+          <circle cx="12" cy="12" r="5"></circle>
+          <line x1="12" y1="1" x2="12" y2="3"></line>
+          <line x1="12" y1="21" x2="12" y2="23"></line>
+          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+          <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+          <line x1="1" y1="12" x2="3" y2="12"></line>
+          <line x1="21" y1="12" x2="23" y2="12"></line>
+          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+          <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+        <svg id="themeIconMoon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+        <span id="themeText">Giao diện</span>
+      </button>
     </header>
 
-    <div class="grid" aria-label="Tổng quan tiến độ">
-      <article><span class="label">Hạng mục P0</span><strong>2 có bản vá</strong><p>Commit trên nhánh sửa cục bộ. Bản chính vẫn chờ tích hợp.</p></article>
-      <article><span class="label">Hồi quy tập trung</span><strong>3/3 đạt</strong><p>Cả ba ca dành riêng cho bản vá đều đạt.</p></article>
-      <article><span class="label">Bộ hồi quy async DAG</span><strong>71 đạt · 3 lỗi</strong><p>Hai lỗi cũng xuất hiện trên bản gốc. Ca còn lại đang chờ đối chiếu.</p></article>
-    </div>
+    <!-- Main Hero: Prominent Review Verdict & Snapshot Timestamp -->
+    <main>
+      <section class="hero-card" aria-labelledby="hero-title">
+        <div class="hero-badge-row">
+          <span class="hero-pill">
+            <span class="pill-pulse" aria-hidden="true"></span>
+            Bản vá sẵn sàng · Chờ xác minh
+          </span>
+          <span class="hero-pill" style="color: #93c5fd; border-color: rgba(147, 197, 253, 0.25);">
+            Snapshot v1.0
+          </span>
+        </div>
 
-    <section aria-labelledby="checks">
-      <h2 id="checks">Các mốc xác minh</h2>
-      <dl>
-        <div><dt>Bản vá</dt><dd>Hai hạng mục P0 đã có thay đổi và kiểm tra tập trung trên nhánh sửa.</dd></div>
-        <div><dt>MCP contract</dt><dd>L1–L3 đạt. <span class="waiting">L4 chưa xác minh.</span></dd></div>
-        <div><dt>Review độc lập</dt><dd><span class="waiting">Chờ xác nhận cho bản vá.</span></dd></div>
-        <div><dt>Triển khai</dt><dd><span class="waiting">Đang chờ.</span></dd></div>
-      </dl>
-    </section>
+        <h1 id="hero-title" class="hero-title">Tiến độ review AG-MCP</h1>
+        <p class="hero-verdict">
+          Bản vá đã được chuẩn bị và 3/3 ca hồi quy tập trung đạt. Review độc lập, tích hợp vào nhánh chính và triển khai vẫn đang chờ.
+        </p>
 
-    <footer>Trang chỉ đọc. Nội dung phản ánh lần đối chiếu ghi ở đầu trang và được cập nhật bằng bản xuất mới.</footer>
-  </main>
+        <div class="hero-meta-bar">
+          <div class="hero-meta-item">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"></circle>
+              <polyline points="12 6 12 12 16 14"></polyline>
+            </svg>
+            <span>Thời điểm đối chiếu:</span>
+            <time datetime="2026-11-10T11:24:45Z"><strong>18:24 ICT · 10/11/2026</strong></time>
+          </div>
+
+          <div class="hero-meta-item">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+              <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+            </svg>
+            <span>Truy cập: <strong>Công khai (Không cần đăng nhập)</strong></span>
+          </div>
+
+          <div class="hero-meta-item">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+              <polyline points="22 4 12 14.01 9 11.01"></polyline>
+            </svg>
+            <span>Tiến độ cổng kiểm soát: <strong>1/4 hoàn tất</strong></span>
+          </div>
+        </div>
+      </section>
+
+      <!-- KPI Summary Cards -->
+      <section class="kpi-section" aria-labelledby="kpi-heading">
+        <div class="section-header">
+          <h2 id="kpi-heading" class="section-title">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="18" y1="20" x2="18" y2="10"></line>
+              <line x1="12" y1="20" x2="12" y2="4"></line>
+              <line x1="6" y1="20" x2="6" y2="14"></line>
+            </svg>
+            Chỉ số kiểm thử then chốt
+          </h2>
+          <span class="section-subtitle">Cập nhật từ bản chụp đối chiếu gần nhất</span>
+        </div>
+
+        <div class="kpi-grid">
+          <!-- Card 1: P0 -->
+          <article class="kpi-card">
+            <div class="kpi-card-header">
+              <span class="kpi-label">Hạng mục P0</span>
+              <span class="kpi-badge badge-wait">Đã có bản vá</span>
+            </div>
+            <div class="kpi-value-row">
+              <span class="kpi-metric">2</span>
+              <span class="kpi-subtext">có bản vá</span>
+            </div>
+            <div class="progress-bar-wrap" aria-hidden="true">
+              <div class="progress-bar-fill fill-amber" style="width: 100%;"></div>
+            </div>
+            <p class="kpi-desc">
+              Commit đã sẵn sàng trên nhánh sửa cục bộ. Bản chính (main) vẫn đang chờ hoàn thành quy trình tích hợp.
+            </p>
+          </article>
+
+          <!-- Card 2: Focused Regressions -->
+          <article class="kpi-card">
+            <div class="kpi-card-header">
+              <span class="kpi-label">Hồi quy tập trung</span>
+              <span class="kpi-badge badge-ok">100% Đạt</span>
+            </div>
+            <div class="kpi-value-row">
+              <span class="kpi-metric">3 / 3</span>
+              <span class="kpi-subtext">đạt chuẩn</span>
+            </div>
+            <div class="progress-bar-wrap" aria-hidden="true">
+              <div class="progress-bar-fill fill-green" style="width: 100%;"></div>
+            </div>
+            <p class="kpi-desc">
+              Cả 3 ca kiểm thử thiết kế chuyên sâu dành riêng cho bản vá P0 đều đạt kết quả tuyệt đối.
+            </p>
+          </article>
+
+          <!-- Card 3: Async DAG Regression -->
+          <article class="kpi-card">
+            <div class="kpi-card-header">
+              <span class="kpi-label">Bộ hồi quy Async DAG</span>
+              <span class="kpi-badge badge-info">71 Đạt · 3 Lỗi</span>
+            </div>
+            <div class="kpi-value-row">
+              <span class="kpi-metric">71</span>
+              <span class="kpi-subtext">/ 74 ca</span>
+            </div>
+            <div class="progress-bar-wrap" aria-hidden="true">
+              <div class="progress-bar-fill fill-blue" style="width: 96%;"></div>
+            </div>
+            <p class="kpi-desc">
+              Hai lỗi đã tồn tại sẵn trên bản gốc upstream. Một ca còn lại đang được giữ lại để đối chiếu độc lập.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <!-- Scannable Verification Timeline -->
+      <section class="timeline-section" aria-labelledby="timeline-heading">
+        <div class="section-header">
+          <h2 id="timeline-heading" class="section-title">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"></circle>
+              <polyline points="12 6 12 12 14 14"></polyline>
+            </svg>
+            Các mốc xác minh kỹ thuật
+          </h2>
+          <span class="section-subtitle">4 chặng kiểm soát chất lượng</span>
+        </div>
+
+        <div class="timeline-card">
+          <div class="milestone-list">
+            <!-- Step 1 -->
+            <div class="milestone-item">
+              <div class="milestone-node node-done" aria-label="Đã hoàn thành">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+              </div>
+              <div class="milestone-content">
+                <div class="milestone-header">
+                  <div class="milestone-title-group">
+                    <span class="milestone-title">1. Chuẩn bị bản vá lỗi</span>
+                  </div>
+                  <span class="milestone-status-badge badge-ok">Đã hoàn thành</span>
+                </div>
+                <p class="milestone-desc">
+                  Hai hạng mục P0 đã có thay đổi mã nguồn và hoàn tất bộ kiểm tra tập trung trên nhánh sửa cục bộ.
+                </p>
+              </div>
+            </div>
+
+            <!-- Step 2 -->
+            <div class="milestone-item">
+              <div class="milestone-node node-active" aria-label="Một phần / Đang xử lý">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="1"></circle>
+                  <circle cx="19" cy="12" r="1"></circle>
+                  <circle cx="5" cy="12" r="1"></circle>
+                </svg>
+              </div>
+              <div class="milestone-content">
+                <div class="milestone-header">
+                  <div class="milestone-title-group">
+                    <span class="milestone-title">2. Kiểm định hợp đồng MCP (MCP Contract)</span>
+                  </div>
+                  <span class="milestone-status-badge badge-wait">Một phần · L4 chưa xác minh</span>
+                </div>
+                <p class="milestone-desc">
+                  <span class="ok">L1–L3 đạt.</span> <span class="waiting">L4 chưa xác minh</span> — tiếp tục kiểm tra tính toàn vẹn của giao thức liên lạc.
+                </p>
+              </div>
+            </div>
+
+            <!-- Step 3 -->
+            <div class="milestone-item">
+              <div class="milestone-node node-waiting" aria-label="Chờ duyệt">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <polyline points="12 6 12 12 16 14"></polyline>
+                </svg>
+              </div>
+              <div class="milestone-content">
+                <div class="milestone-header">
+                  <div class="milestone-title-group">
+                    <span class="milestone-title">3. Đánh giá độc lập (Peer Review)</span>
+                  </div>
+                  <span class="milestone-status-badge badge-wait">Đang chờ</span>
+                </div>
+                <p class="milestone-desc">
+                  <span class="waiting">Chờ xác nhận cho bản vá</span> từ đơn vị kiểm định độc lập trước khi mở cổng tích hợp.
+                </p>
+              </div>
+            </div>
+
+            <!-- Step 4 -->
+            <div class="milestone-item">
+              <div class="milestone-node node-waiting" aria-label="Chờ triển khai">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+                  <polyline points="2 17 12 22 22 17"></polyline>
+                  <polyline points="2 12 12 17 22 12"></polyline>
+                </svg>
+              </div>
+              <div class="milestone-content">
+                <div class="milestone-header">
+                  <div class="milestone-title-group">
+                    <span class="milestone-title">4. Tích hợp & Triển khai (Deployment)</span>
+                  </div>
+                  <span class="milestone-status-badge badge-wait">Đang chờ</span>
+                </div>
+                <p class="milestone-desc">
+                  <span class="waiting">Đang chờ</span> giải phóng cổng kiểm soát (release gate) sau khi các bước trên được phê duyệt đầy đủ.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Assurance & Data Integrity Notice -->
+      <aside class="assurance-box" aria-label="Ghi chú về tính toàn vẹn dữ liệu">
+        <span class="assurance-icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="16" x2="12" y2="12"></line>
+            <line x1="12" y1="8" x2="12.01" y2="8"></line>
+          </svg>
+        </span>
+        <div class="assurance-text">
+          <strong>Nguyên tắc công khai & bảo mật:</strong> Trang này hoàn toàn ở chế độ chỉ đọc (read-only), không đòi hỏi thông tin đăng nhập và được kết xuất tĩnh. Dữ liệu phản ánh trạng thái kỹ thuật tại thời điểm ghi ở đầu trang. Trang được cập nhật khi có bản xuất mới.
+        </div>
+      </aside>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+      <p>Bảng điều khiển review AG-MCP · Phiên bản chỉ đọc công khai</p>
+      <p style="margin-top: 0.35rem;">Mã nguồn được lưu trữ tại <a href="https://github.com/BinhG/ag-mcp-review-status" target="_blank" rel="noopener noreferrer">BinhG/ag-mcp-review-status</a></p>
+    </footer>
+  </div>
+
+  <script>
+    // Theme Switcher Logic
+    (function () {
+      const toggleBtn = document.getElementById('themeToggleBtn');
+      const themeText = document.getElementById('themeText');
+      const iconSun = document.getElementById('themeIconSun');
+      const iconMoon = document.getElementById('themeIconMoon');
+      const root = document.documentElement;
+
+      function getPreferredTheme() {
+        const saved = localStorage.getItem('ag_theme');
+        if (saved) return saved;
+        return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      }
+
+      function setTheme(theme) {
+        root.setAttribute('data-theme', theme);
+        localStorage.setItem('ag_theme', theme);
+        const isDark = theme === 'dark';
+        if (themeText) {
+          themeText.textContent = isDark ? 'Tối' : 'Sáng';
+        }
+        if (iconSun && iconMoon) {
+          iconSun.style.display = isDark ? 'inline' : 'none';
+          iconMoon.style.display = isDark ? 'none' : 'inline';
+        }
+      }
+
+      const initialTheme = getPreferredTheme();
+      setTheme(initialTheme);
+
+      if (toggleBtn) {
+        toggleBtn.addEventListener('click', function () {
+          const current = root.getAttribute('data-theme') || initialTheme;
+          const next = current === 'dark' ? 'light' : 'dark';
+          setTheme(next);
+        });
+      }
+    })();
+  </script>
 </body>
 </html>
